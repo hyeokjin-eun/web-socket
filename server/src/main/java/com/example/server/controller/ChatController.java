@@ -6,7 +6,6 @@ import com.example.server.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequiredArgsConstructor
@@ -14,11 +13,10 @@ public class ChatController {
 
     private final ChatService chatService;
 
-    @MessageMapping("/chat/room/{roomId}/message")
+    @MessageMapping("/chat/room/message")
     public void chatMessage(
-            @PathVariable String roomId,
             ChatSendRequest chatSendRequest) {
-        chatService.sendChat(roomId, Chat.builder()
+        chatService.sendChat(chatSendRequest.getRoomId(), Chat.builder()
                 .message(chatSendRequest.getMessage())
                 .build());
     }

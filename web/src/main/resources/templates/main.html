@@ -22,30 +22,25 @@
     $(document).ready(function() {
         let recInterval = null;
         let sockJs = null;
-        let header = {
-            login: 'mylogin',
-            passcode: 'mypasscode',
-            'userseq' : '1'
-        }
         let new_conn = function() {
             sockJs = new SockJS('http://localhost:8081/connect-websocket', null, {
                 'protocols_whitelist': ['websocket', 'xdr-streaming', 'xhr-streaming', 'iframe-eventsource', 'iframe-htmlfile', 'xdr-polling', 'xhr-polling', 'iframe-xhr-polling', 'jsonp-polling']
             });
 
             //1. SockJS를 내부에 들고있는 stomp를 내어줌
-            var stompClient = Stomp.over(sockJs);
+            let stompClient = Stomp.over(sockJs);
 
             //2. connection이 맺어지면 실행
-
-            stompClient.connect(header, function (frame) {
+            let roomId = 'c7fa4996-4058-45b2-8dc3-4fac84ef90fd';
+            stompClient.connect({}, function (frame) {
                 console.log("STOMP Connection : " + frame)
                 clearInterval(recInterval);
-                stompClient.subscribe("/topic/greeting", function (data) {
+                stompClient.subscribe(`/topic/chat/room/${roomId}`, function (data) {
                     console.log(data);
                 });
 
-                var value = Math.floor(Math.random() * 100)
-                stompClient.send('/app/start', {}, JSON.stringify({ username: value }))
+                let value = Math.floor(Math.random() * 100)
+                stompClient.send('/app/chat/room/message', {}, JSON.stringify({roomId: roomId, message: value}));
             });
 
             sockJs.onclose = function () {

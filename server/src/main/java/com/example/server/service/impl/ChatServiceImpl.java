@@ -15,7 +15,7 @@ public class ChatServiceImpl implements ChatService {
 
     private final StompMessageService stompMessageService;
 
-    private static final String SUB_ROOM_TOPIC_PREFIX = "/topic/chat/room";
+    private static final String SUB_ROOM_TOPIC_PREFIX = "/topic/chat/room/";
 
     @Override
     public void sendChat(String roomId, Chat chat) {

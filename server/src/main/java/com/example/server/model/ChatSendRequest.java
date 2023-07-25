@@ -9,5 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class ChatSendRequest {
 
+    private String roomId;
+
     private String message;
 }
