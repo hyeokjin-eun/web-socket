@@ -38,6 +38,10 @@ public class RoomRepositoryImpl implements RoomRepository {
 
     @Override
     public Room findByRoomId(String roomId) {
+        if (rooms == null || rooms.isEmpty()) {
+            return null;
+        }
+
         return rooms.get(roomId);
     }
 }

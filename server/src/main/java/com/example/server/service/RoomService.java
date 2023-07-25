@@ -10,5 +10,5 @@ public interface RoomService {
 
     List<Room> getRoomList();
 
-    void deleteRoom(String roomId);
+    boolean deleteRoom(String roomId);
 }

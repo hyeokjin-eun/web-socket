@@ -33,8 +33,13 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void deleteRoom(String roomId) {
+    public boolean deleteRoom(String roomId) {
         Room room = roomRepository.findByRoomId(roomId);
+        if (room == null) {
+            return false;
+        }
+
         roomRepository.delete(room);
+        return true;
     }
 }
